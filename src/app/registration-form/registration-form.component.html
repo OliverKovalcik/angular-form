@@ -1,0 +1,54 @@
+
+<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="bg-light p-4">
+    <h2 class="text-center mb-4">
+        Registračný formulár detí na detský letný tábor
+    </h2>
+    <div class="mb-3 row flex-column flex-md-row">
+      <div class="col mb-3 mb-md-0">
+        <label for="firstName" class="form-label mb-0">Meno:</label>
+        <input type="text" id="firstName" formControlName="firstName" class="form-control">
+        <small *ngIf="registrationForm.get('firstName').errors?.['required'] && registrationForm.get('firstName').touched">* Meno je povinná položka</small>
+        <small *ngIf="registrationForm.get('firstName').errors?.['maxlength'] && registrationForm.get('firstName').touched">* Prekročili ste maximálny počet znakov</small>
+        <small *ngIf="registrationForm.get('firstName').errors?.['noSpaceAllowed'] && registrationForm.get('firstName').touched">* Meno nesmie obsahovať žiadne prázne miesta</small>
+      </div>
+  
+      <div class="col">
+        <label for="lastName" class="form-label mb-0">Priezvisko:</label>
+        <input type="text" id="lastName" formControlName="lastName" class="form-control">
+        <small *ngIf="registrationForm.get('lastName').errors?.['required'] && registrationForm.get('lastName').touched">* Priezvisko je povinná položka</small>
+        <small *ngIf="registrationForm.get('lastName').errors?.['maxlength'] && registrationForm.get('lastName').touched">* Prekročili ste maximálny počet znakov</small>
+        <small *ngIf="registrationForm.get('lastName').errors?.['noSpaceAllowed'] && registrationForm.get('lastName').touched">* Priezvisko nesmie obsahovať žiadne prázne miesta</small>
+      </div>
+    </div>
+  
+    <div class="mb-4">
+      <label for="age" class="form-label mb-0">Vek:</label>
+      <input type="text" id="age" formControlName="age" class="form-control">
+      <small *ngIf="registrationForm.get('age').errors?.['required'] && registrationForm.get('age').touched">* Vek je povinná položka</small>
+      <small *ngIf="registrationForm.get('age').errors?.['pattern'] && registrationForm.get('age').touched">* Vek musí byť celé číslo a nesmie obsahovať žiadne prázdne miesta</small>
+    </div>
+  
+    <div class="form-check mb-4">
+      <input type="checkbox" id="hasAttendedBefore" formControlName="hasAttendedBefore" class="form-check-input">
+      <label for="hasAttendedBefore" class="form-check-label">Zúčastnilo sa už dieťa tábora ?</label>
+    </div>
+
+    <label class="mb-2">Preferovaný šport:</label>
+    <div class="mb-4 d-flex flex-wrap">
+        <div class="form-check form-check-inline d-flex align-items-center" *ngFor="let sport of sportsList">
+          <input id="{{sport}}" type="radio" [value]="sport" formControlName="preferredSport" class="form-check-input">
+          <label for="{{sport}}" style="padding-left: 5px;" class="form-check-label">{{ sport }}</label>
+        </div>
+        <small *ngIf="registrationForm.get('preferredSport').errors?.['required'] && registrationForm.get('preferredSport').touched">* Musí byť zvolená aspoň jedna z položiek</small>
+    </div>
+  
+    <div class="mb-3">
+      <label for="note" class="form-label mb-0">Poznámka:</label>
+      <textarea id="note" formControlName="note" class="form-control"></textarea>
+      <small *ngIf="registrationForm.get('note').errors?.['maxlength'] && registrationForm.get('note').touched">* Prekročili ste maximálny počet znakov</small>
+    </div>
+  
+    <div class="mb-3 d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">Zapísať</button>
+    </div>
+</form>
